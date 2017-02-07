@@ -62,6 +62,8 @@ class Adjustment(models.Model):
 
 
 class Additional(models.Model):
+    property = models.ForeignKey(
+        Property, on_delete=models.SET_NULL, null=True)
     other_oa_description = models.CharField(
         max_length=255, blank=True, null=True)
     size = models.DecimalField(max_digits=16, decimal_places=2, null=True)
