@@ -38,6 +38,10 @@ class Property(models.Model):
         max_length=255, blank=True, null=True)
     unadjusted_price = models.DecimalField(
         max_digits=16, decimal_places=2, null=True)
+    adjustement_total_before = models.DecimalField(
+        max_digits=16, decimal_places=2, null=True)
+    adjustement_total = models.DecimalField(
+        max_digits=16, decimal_places=2, null=True)
 
 
 class Area(models.Model):
@@ -46,5 +50,20 @@ class Area(models.Model):
     floor = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
     area = models.DecimalField(max_digits=16, decimal_places=2, null=True)
+    price = models.DecimalField(max_digits=16, decimal_places=2, null=True)
+    value = models.DecimalField(max_digits=16, decimal_places=2, null=True)
+
+
+class Adjustment(models.Model):
+    property = models.ForeignKey(
+        Property, on_delete=models.SET_NULL, null=True)
+    description = models.CharField(max_length=255, blank=True, null=True)
+    percent = models.DecimalField(max_digits=16, decimal_places=2, null=True)
+
+
+class Additional(models.Model):
+    other_oa_description = models.CharField(
+        max_length=255, blank=True, null=True)
+    size = models.DecimalField(max_digits=16, decimal_places=2, null=True)
     price = models.DecimalField(max_digits=16, decimal_places=2, null=True)
     value = models.DecimalField(max_digits=16, decimal_places=2, null=True)
