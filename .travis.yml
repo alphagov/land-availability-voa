@@ -1,0 +1,13 @@
+language: python
+python:
+- '3.5'
+install: pip install -r requirements.txt
+services:
+- postgresql
+before_script:
+- psql -c 'create database landavailability_test;' -U postgres
+- cd landavailability
+env:
+  global:
+  - DATABASE_URL=postgres://postgres@localhost:5432/landavailability_test
+script: pytest -v
