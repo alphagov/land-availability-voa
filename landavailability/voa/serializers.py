@@ -33,6 +33,14 @@ class PropertySerializer(serializers.ModelSerializer):
         model = Property
         fields = '__all__'
 
+        # We want to handle duplicated entries manually so we remove the
+        # unique validator
+        extra_kwargs = {
+            'uarn': {
+                'validators': [],
+            }
+        }
+
     @transaction.atomic
     def create(self, validated_data):
         uarn = validated_data['uarn']
@@ -43,6 +51,7 @@ class PropertySerializer(serializers.ModelSerializer):
             prop = Property.objects.get(uarn=uarn)
         except Property.DoesNotExist:
             prop = Property()
+            prop.uarn = uarn
 
         # Set all the fields for the Property object
         prop.assessment_reference = validated_data['assessment_reference']
