@@ -80,9 +80,9 @@ class PropertySerializer(serializers.ModelSerializer):
         prop.scat_code_only = validated_data['scat_code_only']
         prop.unit_of_measurement = validated_data['unit_of_measurement']
         prop.unadjusted_price = validated_data['unadjusted_price']
-        prop.adjustement_total_before = validated_data[
-            'adjustement_total_before']
-        prop.adjustement_total = validated_data['adjustement_total']
+        prop.adjustement_total_before = validated_data.get(
+            'adjustement_total_before')
+        prop.adjustement_total = validated_data.get('adjustement_total')
         prop.save()
 
         # Clean existing Area objects and create the new ones posted
@@ -105,7 +105,7 @@ class PropertySerializer(serializers.ModelSerializer):
             adjustment = Adjustment()
             adjustment.property = prop
             adjustment.description = a['description']
-            adjustment.percent = a['percent']
+            adjustment.percent = a.get('percent', 0)
             adjustment.save()
 
         # Clean existing Additional objects and create the new ones posted
@@ -115,9 +115,9 @@ class PropertySerializer(serializers.ModelSerializer):
             additional = Additional()
             additional.property = prop
             additional.other_oa_description = a['other_oa_description']
-            additional.size = a['size']
-            additional.price = a['price']
-            additional.value = a['value']
+            additional.size = a.get('size')
+            additional.price = a.get('price')
+            additional.value = a.get('value')
             additional.save()
 
         return prop
