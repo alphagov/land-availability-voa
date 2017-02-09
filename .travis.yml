@@ -10,6 +10,7 @@ before_script:
 env:
   global:
   - DATABASE_URL=postgres://postgres@localhost:5432/landavailability_test
+  - SECRET_KEY=abcd1234
 script: pytest -v
 deploy:
   provider: heroku
