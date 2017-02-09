@@ -1,4 +1,4 @@
-# land-avilability-voa
+# land-availability-voa
 VOA service for Land Availability Tool
 
 # Continuous integration status
