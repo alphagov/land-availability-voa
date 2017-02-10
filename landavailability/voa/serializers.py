@@ -7,31 +7,40 @@ class AreaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Area
-        fields = '__all__'
+        fields = ('floor', 'description', 'area', 'price', 'value')
 
 
 class AdditionalSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Additional
-        fields = '__all__'
+        fields = ('other_oa_description', 'size', 'price', 'value')
 
 
 class AdjustmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Adjustment
-        fields = '__all__'
+        fields = ('description', 'percent')
 
 
 class PropertySerializer(serializers.ModelSerializer):
-    area = AreaSerializer(required=False, many=True)
-    additional = AdditionalSerializer(required=False, many=True)
-    adjustment = AdjustmentSerializer(required=False, many=True)
+    areas = AreaSerializer(many=True)
+    additionals = AdditionalSerializer(many=True)
+    adjustments = AdjustmentSerializer(many=True)
 
     class Meta:
         model = Property
-        fields = '__all__'
+        fields = (
+            'uarn', 'assessment_reference', 'ba_code', 'firm_name',
+            'number_or_name', 'sub_street_1', 'sub_street_2', 'sub_street_3',
+            'street', 'town', 'postal_district', 'county', 'postcode',
+            'scheme_ref', 'primary_description', 'total_area', 'subtotal',
+            'total_value', 'adopted_rv', 'list_year', 'ba_name',
+            'ba_reference_number', 'vo_ref', 'from_date', 'to_date',
+            'scat_code_only', 'unit_of_measurement', 'unadjusted_price',
+            'adjustement_total_before', 'adjustement_total',
+            'areas', 'additionals', 'adjustments')
 
         # We want to handle duplicated entries manually so we remove the
         # unique validator
@@ -77,6 +86,7 @@ class PropertySerializer(serializers.ModelSerializer):
         prop.ba_reference_number = validated_data['ba_reference_number']
         prop.vo_ref = validated_data['vo_ref']
         prop.from_date = validated_data['from_date']
+        prop.to_date = validated_data['to_date']
         prop.scat_code_only = validated_data['scat_code_only']
         prop.unit_of_measurement = validated_data['unit_of_measurement']
         prop.unadjusted_price = validated_data['unadjusted_price']
@@ -86,38 +96,21 @@ class PropertySerializer(serializers.ModelSerializer):
         prop.save()
 
         # Clean existing Area objects and create the new ones posted
-        Area.objects.filter(property__uarn=uarn).delete()
+        Area.objects.filter(area_property__uarn=uarn).delete()
 
-        for a in validated_data['area']:
-            area = Area()
-            area.property = prop
-            area.floor = a['floor']
-            area.description = a['description']
-            area.area = a['area']
-            area.price = a['price']
-            area.value = a['value']
-            area.save()
+        for area in validated_data['areas']:
+            Area.objects.create(area_property=prop, **area)
 
         # Clean existing Adjustment objects and create the new ones posted
-        Adjustment.objects.filter(property__uarn=uarn).delete()
+        Adjustment.objects.filter(adjustment_property__uarn=uarn).delete()
 
-        for a in validated_data['adjustment']:
-            adjustment = Adjustment()
-            adjustment.property = prop
-            adjustment.description = a['description']
-            adjustment.percent = a.get('percent', 0)
-            adjustment.save()
+        for adjustment in validated_data['adjustments']:
+            Adjustment.objects.create(adjustment_property=prop, **adjustment)
 
         # Clean existing Additional objects and create the new ones posted
-        Additional.objects.filter(property__uarn=uarn).delete()
+        Additional.objects.filter(additional_property__uarn=uarn).delete()
 
-        for a in validated_data['additional']:
-            additional = Additional()
-            additional.property = prop
-            additional.other_oa_description = a['other_oa_description']
-            additional.size = a.get('size')
-            additional.price = a.get('price')
-            additional.value = a.get('value')
-            additional.save()
+        for additional in validated_data['additionals']:
+            Additional.objects.create(additional_property=prop, **additional)
 
         return prop
