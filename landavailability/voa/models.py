@@ -45,8 +45,8 @@ class Property(models.Model):
 
 
 class Area(models.Model):
-    property = models.ForeignKey(
-        Property, on_delete=models.SET_NULL, null=True)
+    area_property = models.ForeignKey(
+        Property, on_delete=models.SET_NULL, null=True, related_name='areas')
     floor = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
     area = models.DecimalField(max_digits=16, decimal_places=2, null=True)
@@ -55,15 +55,17 @@ class Area(models.Model):
 
 
 class Adjustment(models.Model):
-    property = models.ForeignKey(
-        Property, on_delete=models.SET_NULL, null=True)
+    adjustment_property = models.ForeignKey(
+        Property, on_delete=models.SET_NULL, null=True,
+        related_name='adjustments')
     description = models.CharField(max_length=255, blank=True, null=True)
     percent = models.DecimalField(max_digits=16, decimal_places=2, null=True)
 
 
 class Additional(models.Model):
-    property = models.ForeignKey(
-        Property, on_delete=models.SET_NULL, null=True)
+    additional_property = models.ForeignKey(
+        Property, on_delete=models.SET_NULL, null=True,
+        related_name='additionals')
     other_oa_description = models.CharField(
         max_length=255, blank=True, null=True)
     size = models.DecimalField(max_digits=16, decimal_places=2, null=True)

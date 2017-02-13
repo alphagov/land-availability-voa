@@ -10,7 +10,7 @@ class TestVOASerializer(TestCase):
     def test_voa_serializer_valid_payload(self):
         json_payload = """
             {
-                "area": [
+                "areas": [
                     {
                         "floor": "Ground",
                         "description": "Retail Zone A",
@@ -40,8 +40,8 @@ class TestVOASerializer(TestCase):
                         "value": 1498
                     }
                 ],
-                "additional": [],
-                "adjustment": [
+                "additionals": [],
+                "adjustments": [
                     {
                         "description": "Bracknell town redevelopment",
                         "percent": -15.00
@@ -88,7 +88,7 @@ class TestVOASerializer(TestCase):
     def test_voa_serializer_create_object(self):
         json_payload = """
             {
-                "area": [
+                "areas": [
                     {
                         "floor": "Ground",
                         "description": "Retail Zone A",
@@ -118,8 +118,8 @@ class TestVOASerializer(TestCase):
                         "value": 1498
                     }
                 ],
-                "additional": [],
-                "adjustment": [
+                "additionals": [],
+                "adjustments": [
                     {
                         "description": "Bracknell town redevelopment",
                         "percent": -15.00
