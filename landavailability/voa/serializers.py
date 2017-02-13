@@ -25,9 +25,9 @@ class AdjustmentSerializer(serializers.ModelSerializer):
 
 
 class PropertySerializer(serializers.ModelSerializer):
-    areas = AreaSerializer(many=True)
-    additionals = AdditionalSerializer(many=True)
-    adjustments = AdjustmentSerializer(many=True)
+    areas = AreaSerializer(many=True, required=False)
+    additionals = AdditionalSerializer(many=True, required=False)
+    adjustments = AdjustmentSerializer(many=True, required=False)
 
     class Meta:
         model = Property
@@ -98,19 +98,22 @@ class PropertySerializer(serializers.ModelSerializer):
         # Clean existing Area objects and create the new ones posted
         Area.objects.filter(area_property__uarn=uarn).delete()
 
-        for area in validated_data['areas']:
+        areas = validated_data.get('areas')
+        for area in areas or []:
             Area.objects.create(area_property=prop, **area)
 
         # Clean existing Adjustment objects and create the new ones posted
         Adjustment.objects.filter(adjustment_property__uarn=uarn).delete()
 
-        for adjustment in validated_data['adjustments']:
+        adjustments = validated_data.get('adjustments')
+        for adjustment in adjustments or []:
             Adjustment.objects.create(adjustment_property=prop, **adjustment)
 
         # Clean existing Additional objects and create the new ones posted
         Additional.objects.filter(additional_property__uarn=uarn).delete()
 
-        for additional in validated_data['additionals']:
+        additionals = validated_data.get('additionals')
+        for additional in additionals or []:
             Additional.objects.create(additional_property=prop, **additional)
 
         return prop

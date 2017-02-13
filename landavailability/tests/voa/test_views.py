@@ -67,7 +67,6 @@ class TestVOACreateView(LandAvailabilityAdminAPITestCase):
                     "value": 1498
                 }
             ],
-            "additionals": [],
             "adjustments": [
                 {
                     "description": "Bracknell town redevelopment",
