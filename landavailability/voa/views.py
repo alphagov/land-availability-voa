@@ -14,5 +14,5 @@ class VOADetailView(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated, )
     queryset = Property.objects.all()
     serializer_class = PropertySerializer
-    lookup_field = 'uarn'
-    lookup_url_kwarg = 'uarn'
+    lookup_field = 'ba_reference_number'
+    lookup_url_kwarg = 'ba_ref'

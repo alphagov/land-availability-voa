@@ -47,20 +47,23 @@ class PropertySerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'uarn': {
                 'validators': [],
+            },
+            'ba_reference_number': {
+                'validators': [],
             }
         }
 
     @transaction.atomic
     def create(self, validated_data):
-        uarn = validated_data['uarn']
+        ba_ref = validated_data['ba_reference_number']
 
         # If the Property already exists, don't create a new object and
         # just update all its fields.
         try:
-            prop = Property.objects.get(uarn=uarn)
+            prop = Property.objects.get(ba_reference_number=ba_ref)
         except Property.DoesNotExist:
             prop = Property()
-            prop.uarn = uarn
+            prop.ba_reference_number = ba_ref
 
         # Set all the fields for the Property object
         prop.assessment_reference = validated_data['assessment_reference']
@@ -96,21 +99,23 @@ class PropertySerializer(serializers.ModelSerializer):
         prop.save()
 
         # Clean existing Area objects and create the new ones posted
-        Area.objects.filter(area_property__uarn=uarn).delete()
+        Area.objects.filter(area_property__ba_reference_number=ba_ref).delete()
 
         areas = validated_data.get('areas')
         for area in areas or []:
             Area.objects.create(area_property=prop, **area)
 
         # Clean existing Adjustment objects and create the new ones posted
-        Adjustment.objects.filter(adjustment_property__uarn=uarn).delete()
+        Adjustment.objects.filter(
+            adjustment_property__ba_reference_number=ba_ref).delete()
 
         adjustments = validated_data.get('adjustments')
         for adjustment in adjustments or []:
             Adjustment.objects.create(adjustment_property=prop, **adjustment)
 
         # Clean existing Additional objects and create the new ones posted
-        Additional.objects.filter(additional_property__uarn=uarn).delete()
+        Additional.objects.filter(
+            additional_property__ba_reference_number=ba_ref).delete()
 
         additionals = validated_data.get('additionals')
         for additional in additionals or []:

@@ -6,6 +6,8 @@ class Property(models.Model):
         max_length=32, blank=True, null=True)
     uarn = models.CharField(unique=True, max_length=100)
     ba_code = models.CharField(max_length=255, blank=True, null=True)
+    ba_name = models.CharField(max_length=255, blank=True, null=True)
+    ba_reference_number = models.CharField(max_length=255, unique=True)
     firm_name = models.CharField(max_length=255, blank=True, null=True)
     number_or_name = models.CharField(max_length=255, blank=True, null=True)
     sub_street_1 = models.CharField(max_length=255, blank=True, null=True)
@@ -27,9 +29,6 @@ class Property(models.Model):
     adopted_rv = models.DecimalField(
         max_digits=16, decimal_places=2, null=True)
     list_year = models.IntegerField(null=True)
-    ba_name = models.CharField(max_length=255, blank=True, null=True)
-    ba_reference_number = models.CharField(
-        max_length=255, blank=True, null=True)
     vo_ref = models.CharField(max_length=255, blank=True, null=True)
     from_date = models.CharField(max_length=255, blank=True, null=True)
     to_date = models.CharField(max_length=255, blank=True, null=True)

@@ -198,7 +198,7 @@ class TestVOAGetDetailsView(LandAvailabilityUserAPITestCase):
         self.assertTrue(serializer.is_valid())
         serializer.save()
 
-        url = reverse('voa-detail', kwargs={'uarn': '6922442000'})
+        url = reverse('voa-detail', kwargs={'ba_ref': '00260500013008'})
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
