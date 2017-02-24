@@ -1,1 +1,1 @@
-web: gunicorn --chdir landavailability landavailability.wsgi:application --log-file -
+web: gunicorn --chdir landavailability landavailability.wsgi:application --worker-class gevent --log-file -
