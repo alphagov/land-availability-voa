@@ -11,6 +11,10 @@ env:
   global:
   - DATABASE_URL=postgres://postgres@localhost:5432/landavailability_test
   - SECRET_KEY=abcd1234
+  - OPBEAT_ORGANIZATION_ID=abcd1234
+  - OPBEAT_APP_ID=abcd1234
+  - OPBEAT_SECRET_TOKEN=abcd1234
+  - OPBEAT_DISABLE_SEND=true
 script: pytest -v
 deploy:
   provider: heroku
