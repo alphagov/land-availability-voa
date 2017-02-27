@@ -9,4 +9,3 @@ dj-database-url==0.4.2
 gunicorn==19.6.0
 whitenoise==3.3.0
 eventlet==0.20.1
-newrelic==2.80.0.60
