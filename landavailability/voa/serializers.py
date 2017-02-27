@@ -66,6 +66,7 @@ class PropertySerializer(serializers.ModelSerializer):
             prop.ba_reference_number = ba_ref
 
         # Set all the fields for the Property object
+        prop.uarn = validated_data['uarn']
         prop.assessment_reference = validated_data['assessment_reference']
         prop.ba_code = validated_data['ba_code']
         prop.firm_name = validated_data['firm_name']
