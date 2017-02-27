@@ -148,8 +148,8 @@ REST_FRAMEWORK = {
 }
 
 OPBEAT = {
+    'DEBUG': True,
     'ORGANIZATION_ID': get_env_variable('OPBEAT_ORGANIZATION_ID'),
     'APP_ID': get_env_variable('OPBEAT_APP_ID'),
     'SECRET_TOKEN': get_env_variable('OPBEAT_SECRET_TOKEN'),
-    'DEBUG': False,
 }
