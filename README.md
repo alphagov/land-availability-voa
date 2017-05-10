@@ -4,6 +4,7 @@ VOA service for Land Availability Tool
 # Continuous integration status
 
 [![Travis-CI Status](https://secure.travis-ci.org/alphagov/land-availability-voa.png?branch=master)](http://travis-ci.org/#!/alphagov/land-availability-voa)
+[![codecov](https://codecov.io/gh/alphagov/land-availability-voa/branch/master/graph/badge.svg)](https://codecov.io/gh/alphagov/land-availability-voa)
 
 # PostgreSQL Setup
 
