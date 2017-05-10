@@ -15,7 +15,9 @@ env:
   - OPBEAT_APP_ID=abcd1234
   - OPBEAT_SECRET_TOKEN=abcd1234
   - OPBEAT_DISABLE_SEND=true
-script: pytest -v
+script: pytest -v --cov-report= --cov=voa tests/
+after_success:
+  - codecov
 deploy:
   provider: heroku
   api_key:
