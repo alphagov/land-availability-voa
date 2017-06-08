@@ -37,7 +37,7 @@ SECRET_KEY = get_env_variable('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['land-availability-voa.herokuapp.com']
+ALLOWED_HOSTS = ['land-availability-voa.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
