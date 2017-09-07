@@ -35,7 +35,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('LANDAVAILABILITY_DEBUG', False)
+DEBUG = os.environ.get('LAND_AVAILABILITY_DEBUG', '').lower() == 'true'
 
 ALLOWED_HOSTS = ['land-availability-voa.herokuapp.com', '127.0.0.1']
 
